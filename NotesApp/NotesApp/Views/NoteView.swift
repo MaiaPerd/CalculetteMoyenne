@@ -27,18 +27,21 @@ struct NoteView: View {
     
     var body: some View {
         HStack{
-            if matiere.isEdited {
-                Button(action: {matiere.onEdited()}){
-                    if isText {
+            if isText {
+                if matiere.isEdited {
+                    Button(action: {matiere.onEdited(isCancelled: true)}){
+                    
                         Image(systemName: "lock.open")
-                    }
-                }.padding(.horizontal)
-            } else {
-                Button(action: matiere.onEditing){
-                    if isText {
+                        
+                    }.padding(.horizontal)
+                } else {
+                    Button(action: matiere.onEditing){
+                        
                         Image(systemName: "lock")
-                    }
-                }.padding(.horizontal)
+                        
+                    }.padding(.horizontal)
+                }
+                
             }
            
             VStack(alignment: .leading){
@@ -92,7 +95,7 @@ struct NoteView: View {
                                 
                         })
                         )
-                    TextView(isText: true, text: "\(matiere.model.note)")
+                    Text(String(format: "%.2f", matiere.model.note))
                 }
     
             }

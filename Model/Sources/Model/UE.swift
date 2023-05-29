@@ -38,5 +38,16 @@ public struct UE : Identifiable {
     public mutating func addNote(note: Matiere){
         self.listeNotes.append(note)
     }
+    
+    public mutating func deleteNote(note: Matiere) -> Bool{
+        let index = listeNotes.firstIndex(where: {$0.id == note.id})
+        if index != nil {
+            var res = self.listeNotes.remove(at: index!)
+            if res.id == note.id {
+                return true
+            }
+        }
+        return false
+    }
    
 }

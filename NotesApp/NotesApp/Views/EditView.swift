@@ -23,7 +23,7 @@ struct EditView: View {
                         }
                         HStack{
                             Capsule().frame(width: ue.model.moyenne*10, height: 10).foregroundColor(getCapsuleColor())
-                            Text("\(ue.model.moyenne)")
+                            Text(String(format: "%.2f", ue.model.moyenne))
                         }
                     }.padding(.horizontal)
                     Divider()
@@ -35,21 +35,25 @@ struct EditView: View {
                     VStack(alignment: .leading){
                         Label("Détails des notes", systemImage: "note.text").font(.title2).padding(.vertical)
                         ForEach(ue.original.listeNotes){ note in
-                            NoteView(matiere: MatiereVM(matiere: note), isText: false)
-                        }
-                        Divider().padding(.leading, 10)
+                            HStack{
+                                NoteView(matiere: MatiereVM(matiere: note), isText: false)
+                                Button(action: {ue.original.deleteNote(note: note)}){
+                                    Image(systemName: "delete.left.fill")
+                                }.padding()
+                            }
+                            Divider().padding(.leading, 10)
+                        }.onDelete(perform: deleteItems)
+                       
                     }.padding(.horizontal)
                 }
-                .accentColor(.red)
                 .toolbar{
                     ToolbarItem(placement: .cancellationAction){
-                        
-                        Button(action: {ue.onEdited(isCancelled: true)}){
+                        Button(action: {ue.onEdited()}){
                             Image(systemName: "xmark")
                         }
                 }
                     ToolbarItem(placement: .confirmationAction){
-                        Button(action: {ue.onEdited()}){
+                        Button(action: {ue.onEdited(isCancelled: true)}){
                             Image(systemName: "checkmark")
                         }
                 }
@@ -57,6 +61,10 @@ struct EditView: View {
                
             }
         }
+    }
+    
+    func deleteItems(at offsets: IndexSet) {
+        ue.original.listeNotes.remove(atOffsets: offsets)
     }
     
     private func getCapsuleColor() -> Color{

@@ -21,7 +21,7 @@ struct UECalculetteView: View {
                 }
                 HStack{
                     Capsule().frame(width: (ue.model.moyenne*10), height: 10).foregroundColor(getCapsuleColor())
-                    Text("\(ue.original.moyenne.formatted(.number))")
+                    Text(String(format: "%.2f", ue.original.moyenne))
                 }
                 
             }.padding(.horizontal)

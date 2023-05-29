@@ -22,10 +22,10 @@ struct UEView: View {
                 Label("Détails des notes", systemImage: "note.text").font(.title2).padding(.vertical)
                 ForEach(ue.original.listeNotes){ note in
                     NoteView(matiere: MatiereVM(matiere: note), isText: isText)
+                    Divider().padding(.leading, 10)
                 }
-                Divider().padding(.leading, 10)
             }.padding(.horizontal)
-        }
+        }.navigationTitle("UE\(ue.original.nbUE) \(ue.original.name)")
         .accentColor(.red)
     }
 }

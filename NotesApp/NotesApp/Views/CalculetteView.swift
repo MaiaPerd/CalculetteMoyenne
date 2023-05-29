@@ -24,7 +24,7 @@ struct CalculetteView: View {
                             HStack{
                                 Label("\(bloc.name):", systemImage: "doc.on.doc.fill")
                                 Spacer()
-                                Text("\(bloc.moyenne.formatted(.number))")
+                                Text(String(format: "%.2f", bloc.moyenne))
                                 Image(systemName: "graduationcap.circle.fill")
                             }
                             
