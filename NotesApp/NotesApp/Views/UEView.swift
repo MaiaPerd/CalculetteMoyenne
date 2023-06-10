@@ -15,23 +15,23 @@ struct UEView: View {
         VStack(alignment: .leading){
             UECalculetteView(ue: ue, isDetail: true)
             Divider()
-            Label("coefficient: \(ue.model.coef)", systemImage: "xmark.circle.fill").padding()
+            Label("coefficient: \(ue.coef)", systemImage: "xmark.circle.fill").padding()
             Divider()
             VStack(alignment: .leading){
                
                 Label("Détails des notes", systemImage: "note.text").font(.title2).padding(.vertical)
-                ForEach(ue.original.listeNotes){ note in
-                    NoteView(matiere: MatiereVM(matiere: note), isText: isText)
+                ForEach($ue.listeNotesVM){ $note in
+                    NoteView(matiere: note, isText: isText)
                     Divider().padding(.leading, 10)
                 }
             }.padding(.horizontal)
-        }.navigationTitle("UE\(ue.original.nbUE) \(ue.original.name)")
+        }.navigationTitle("UE\($ue.nbUe.wrappedValue) \(ue.name)")
         .accentColor(.red)
     }
 }
 
 struct UEView_Previews: PreviewProvider {
     static var previews: some View {
-        UEView(ue: UEVM(ue: UEsVM(ues: UEStub.loadUEs(),  blocs: UEStub.loadBlocs()).allUEs[0]), isText: true)
+        UEView(ue: UEVM(model: UEStub.loadUEs().first!), isText: true)
     }
 }

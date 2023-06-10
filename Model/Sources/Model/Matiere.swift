@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Matiere : Identifiable {
+public struct Matiere : Identifiable, Equatable {
     public let id: UUID
     public var name: String
     public var coef: Int
@@ -27,6 +27,10 @@ public struct Matiere : Identifiable {
         self.name = name
         self.note = note
     }
+    
+    public static func == (lhs: Matiere, rhs: Matiere) -> Bool {
+           lhs.id == rhs.id
+       }
     
 }
 

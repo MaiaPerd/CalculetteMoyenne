@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Bloc : Identifiable {
+public struct Bloc : Identifiable, Equatable {
     public let id: UUID
     public var name: String
     public var moyenne: Float {
@@ -27,5 +27,9 @@ public struct Bloc : Identifiable {
         self.name = name
         self.listeUEs = ues
     }
+    
+    public static func == (lhs: Bloc, rhs: Bloc) -> Bool {
+          lhs.id == rhs.id
+      }
 }
 

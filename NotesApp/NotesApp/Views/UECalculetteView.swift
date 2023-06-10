@@ -15,13 +15,16 @@ struct UECalculetteView: View {
         HStack{
             VStack(alignment: .leading){
                 HStack{
-                    Text("UE\(ue.model.nbUE) \(ue.model.name)").padding(.horizontal, 4)
+                    Text("UE\(ue.nbUe) \(ue.name)").padding(.horizontal, 4)
                     Spacer()
-                    Text("\(ue.model.coef)")
+                    if !isDetail {
+                        Text("\(ue.coef)")
+                    }
+                    
                 }
                 HStack{
-                    Capsule().frame(width: (ue.model.moyenne*10), height: 10).foregroundColor(getCapsuleColor())
-                    Text(String(format: "%.2f", ue.original.moyenne))
+                    Capsule().frame(width: (ue.moyenne.floatToCgFloat()*10), height: 10).foregroundColor(getCapsuleColor())
+                    Text(String(format: "%.2f", ue.moyenne.floatToCgFloat()))
                 }
                 
             }.padding(.horizontal)
@@ -37,7 +40,7 @@ struct UECalculetteView: View {
     }
     
     private func getCapsuleColor() -> Color{
-        if ue.model.moyenne > 10 {
+        if ue.moyenne > 10 {
             return .red
         }
         return .green
@@ -46,6 +49,6 @@ struct UECalculetteView: View {
 
 struct UECalculetteView_Previews: PreviewProvider {
     static var previews: some View {
-        UECalculetteView(ue: UEVM(ue: UEsVM(ues: UEStub.loadUEs(),  blocs: UEStub.loadBlocs()).allUEs[0]), isDetail: false)
+        UECalculetteView(ue: UEVM(model: UEStub.loadUEs().first!), isDetail: false)
     }
 }

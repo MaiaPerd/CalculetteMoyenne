@@ -82,7 +82,7 @@ public class UEStub {
         
         mesNotes.append(Matiere(name: "Architecture de projets C# .NET (2)", coef: 9, note: 10))
         mesNotes.append(Matiere(name: "Client/Serveur", coef: 4, note: 11))
-        mesNotes.append(Matiere(name: "iOS", coef: 5, note: 18))
+        mesNotes.append(Matiere(name: "iOS", coef: 5, note: 14))
         mesNotes.append(Matiere(name: "Multiplateformes", coef: 3, note: 12))
         mesNotes.append(Matiere(name: "QT Quick", coef: 5, note: 12))
         mesNotes.append(Matiere(name: "Xamarin", coef: 5, note: 12))

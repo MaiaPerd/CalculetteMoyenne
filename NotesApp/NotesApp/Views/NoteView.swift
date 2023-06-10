@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NoteView: View {
     @ObservedObject var matiere: MatiereVM
+    
     var isLock = true
     
     var isText: Bool
@@ -21,15 +22,15 @@ struct NoteView: View {
         self.isText = isText
         if isText == false {
          //   self.matiere.onEdited()
-            self.matiere.isEdited = true
+            self.matiere.onEditing()
         }
     }
     
     var body: some View {
         HStack{
             if isText {
-                if matiere.isEdited {
-                    Button(action: {matiere.onEdited(isCancelled: true)}){
+                if matiere.isEditing {
+                    Button(action: matiere.onEdited){
                     
                         Image(systemName: "lock.open")
                         
@@ -46,20 +47,18 @@ struct NoteView: View {
            
             VStack(alignment: .leading){
                 HStack{
-                    if !matiere.isEdited {
-                        Text(matiere.model.name)
+                    if !matiere.isEditing {
+                        Text(matiere.name)
                     } else{
-                        TextField(matiere.model.name, text: $matiere.model.name)
+                        TextField(matiere.name, text: $matiere.name)
                     }
-                    //TextView(isText: !matiere.isEdited, text: matiere.model.name)
                     Spacer()
-                    if !matiere.isEdited {
-                        Text("\(matiere.model.coef)")
+                    if !matiere.isEditing {
+                        Text("\(matiere.coef)")
                     } else{
-                        TextField("\(matiere.model.coef)", value: $matiere.model.coef, formatter: NumberFormatter()) .multilineTextAlignment(.trailing)
+                        TextField("\(matiere.coef)", value: $matiere.coef, formatter: NumberFormatter()) .multilineTextAlignment(.trailing)
                         
                     }
-                   // TextView(isText: !matiere.isEdited, text: "\(matiere.model.coef)")
                 }
               
                 HStack{
@@ -69,7 +68,7 @@ struct NoteView: View {
                         .onChanged({
                             value in
                             
-                            if matiere.isEdited {
+                            if matiere.isEditing {
                                 if value.location.x <= 200 && value.location.x > 0 {
                                     setWidth(newWidth: value.location.x)
                                 }
@@ -95,7 +94,7 @@ struct NoteView: View {
                                 
                         })
                         )
-                    Text(String(format: "%.2f", matiere.model.note))
+                    Text(String(format: "%.2f", matiere.note))
                 }
     
             }
@@ -104,7 +103,7 @@ struct NoteView: View {
     }
     
     private func setCapsuleColor(){
-        if matiere.model.note > 10 {
+        if matiere.note >= 10 {
             capsuleColor = .red
         } else {
             capsuleColor = .green
@@ -112,14 +111,14 @@ struct NoteView: View {
     }
     
     private func getWidth() -> CGFloat{
-        if matiere.model.note * 10 < 10 {
+        if matiere.note * 10 < 10 {
             return 10
         }
-        return matiere.model.note * 10
+        return matiere.note.floatToCgFloat() * 10
     }
     
     private func setWidth(newWidth: CGFloat) {
-        matiere.model.note = newWidth / 10
+        matiere.note = newWidth.cgFloatToFloat() / 10
         setCapsuleColor()
     }
     
@@ -130,6 +129,6 @@ struct NoteView: View {
 
 struct NoteView_Previews: PreviewProvider {
     static var previews: some View {
-        NoteView(matiere: MatiereVM(matiere: UEStub.loadNotesUE1()[0]), isText: true)
+        NoteView(matiere: MatiereVM(model: UEStub.loadNotesUE1()[0]), isText: true)
     }
 }

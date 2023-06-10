@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct UE : Identifiable {
+public struct UE : Identifiable, Equatable {
     public let id: UUID
     public var name: String
     public var nbUE: Int
@@ -34,15 +34,34 @@ public struct UE : Identifiable {
         self.listeNotes = listeNotes
     }
     
+    public static func == (lhs: UE, rhs: UE) -> Bool {
+          lhs.id == rhs.id
+      }
+    
     
     public mutating func addNote(note: Matiere){
         self.listeNotes.append(note)
     }
     
+    public mutating func addNote(){
+        self.listeNotes.append(Matiere(name: "Nouvelle note", coef: 0, note: 0))
+    }
+    
     public mutating func deleteNote(note: Matiere) -> Bool{
         let index = listeNotes.firstIndex(where: {$0.id == note.id})
         if index != nil {
-            var res = self.listeNotes.remove(at: index!)
+            let res = self.listeNotes.remove(at: index!)
+            if res.id == note.id {
+                return true
+            }
+        }
+        return false
+    }
+    
+    public mutating func updateNote(note: Matiere) -> Bool{
+        let index = listeNotes.firstIndex(where: {$0.id == note.id})
+        if index != nil {
+            let res = self.listeNotes.remove(at: index!)
             if res.id == note.id {
                 return true
             }

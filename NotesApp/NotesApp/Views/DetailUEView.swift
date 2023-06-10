@@ -18,8 +18,49 @@ struct DetailUEView: View {
                         Text("Edit")
                     }
                 }
-            }.sheet(isPresented: $ue.isEdited){
-                EditView(ue: ue)
+               /* ToolbarItem(placement: .navigationBarTrailing){
+                    Button(action: ue.onAdding){
+                        Text("Add")
+                    }
+                }*/
+            }.sheet(isPresented: $ue.isEditing){
+                NavigationStack{
+                    EditView(ue: ue.editedCopy!)
+                        .toolbar{
+                            ToolbarItem(placement: .cancellationAction){
+                                Button(action: {ue.onEdited(isCancelled: true)}){
+                                    Image(systemName: "xmark")
+                                }
+                            }
+                            ToolbarItem(placement: .confirmationAction){
+                                Button(action: {
+                                    ue.onEdited()}){
+                                        Image(systemName: "checkmark")
+                                    }
+                            }
+                        }
+                }.accentColor(.red)
+            }.sheet(isPresented: $ue.isAdding){
+                NavigationStack{
+                    NoteEditView(matiere: ue.addedItem!)
+                        .toolbar{
+                            ToolbarItem(id: "add", placement: .confirmationAction){
+                                Button(action: {
+                                    self.ue.onAdded()
+                                }){
+                                    Text("Add")
+                                }
+                            }
+                            ToolbarItem(id: "cancel", placement: .cancellationAction){
+                                Button(action: {
+                                    self.ue.onAdded(isCancelled:true)
+                                }){
+                                    Text("Cancel")
+                                }
+                            }
+                        }
+                        .navigationBarTitle("Ajouter une matière")
+                }.accentColor(.red)
             }
         }.accentColor(.red)
     }
@@ -27,6 +68,6 @@ struct DetailUEView: View {
 
 struct DetailUEView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailUEView(ue: UEVM(ue: UEsVM(ues: UEStub.loadUEs(), blocs: UEStub.loadBlocs()).allUEs[0]))
+        DetailUEView(ue: UEVM(model: UEStub.loadUEs().first!))
     }
 }

@@ -41,7 +41,7 @@ struct CalculetteView: View {
                         Text("Détail des UEs.").padding(.horizontal).padding(.bottom, 4)
                         ForEach(uesVM.allUEs){ue in
                             VStack{
-                                UECalculetteView(ue: UEVM(ue: ue), isDetail: false)
+                                UECalculetteView(ue: ue, isDetail: false)
                                 Divider().padding(.horizontal, 30)
                             }
                         }
