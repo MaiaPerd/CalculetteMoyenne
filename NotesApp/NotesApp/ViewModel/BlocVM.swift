@@ -9,10 +9,14 @@ import Foundation
 import Model
 
 
-public class BlocVM : ObservableObject, Identifiable, Equatable  {
+public class BlocVM : ObservableObject, Identifiable, Equatable, Hashable  {
     
     public static func == (lhs: BlocVM, rhs: BlocVM) -> Bool {
         lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine("bloc")
     }
     
     public init(){}
@@ -35,7 +39,7 @@ public class BlocVM : ObservableObject, Identifiable, Equatable  {
             if !self.model.listeUEs.compare(to: self.listeUEs.map({$0.model})){
                 self.listeUEs = self.model.listeUEs.map({UEVM(model: $0)})
                 self.listeUEs.forEach { uevm in
-                    uevm.bloc = self
+                    uevm.subscribe(with: self, and: onNotifyChanged(source:))
                 }
              }
         }
@@ -63,12 +67,9 @@ public class BlocVM : ObservableObject, Identifiable, Equatable  {
         }
     }
     
-   func update(from uevm: UEVM){
-       if let index = self.model.listeUEs.firstIndex(of: uevm.model){
-                  self.model.listeUEs[index] = uevm.model
-              }
+    func onNotifyChanged(source:UEVM){
         self.objectWillChange.send()
-   }
+    }
     
     
 }
