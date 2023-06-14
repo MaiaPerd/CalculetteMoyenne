@@ -84,7 +84,7 @@ public class UEVM : ObservableObject  {
 public class UEVM : ObservableObject, Identifiable, Equatable  {
     
     public static func == (lhs: UEVM, rhs: UEVM) -> Bool {
-          lhs.id == rhs.id
+        lhs.id == rhs.id && lhs.moyenne == rhs.moyenne
       }
     
     public init(){}
@@ -106,9 +106,6 @@ public class UEVM : ObservableObject, Identifiable, Equatable  {
             }
             if self.model.coef != self.coef {
                 self.coef = self.model.coef
-            }
-            if self.model.moyenne != self.moyenne {
-                self.moyenne = self.model.moyenne
             }
             if !self.model.listeNotes.compare(to: self.listeNotesVM.map({$0.model})){
                 self.listeNotesVM = self.model.listeNotes.map({MatiereVM(model: $0)})
@@ -147,8 +144,9 @@ public class UEVM : ObservableObject, Identifiable, Equatable  {
         }
     }
     
-    @Published
-    var moyenne: Float = 0 
+    var moyenne: Float {
+        model.moyenne
+    }
     
     @Published
     var listeNotesVM: [MatiereVM] = [] {
@@ -229,15 +227,10 @@ public class UEVM : ObservableObject, Identifiable, Equatable  {
     
     
     func update(from mvm: MatiereVM){
+        if let index = self.model.listeNotes.firstIndex(where: {$0.id == mvm.model.id}){
+                   self.model.listeNotes[index] = mvm.model
+               }
         self.objectWillChange.send()
-       /* if self.listeNotesVM.contains(mvm) {
-            var index = self.listeNotesVM.firstIndex{$0 === mvm}
-            if let i = index {
-                self.listeNotesVM[i] = mvm
-            }
-        }*/
-        self.listeNotesVM.append(mvm)
-        self.listeNotesVM.remove(at: self.listeNotesVM.count-1)
     }
     
     var bloc: BlocVM?

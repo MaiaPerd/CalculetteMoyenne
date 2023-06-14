@@ -29,7 +29,7 @@ public struct Matiere : Identifiable, Equatable {
     }
     
     public static func == (lhs: Matiere, rhs: Matiere) -> Bool {
-           lhs.id == rhs.id
+        lhs.id == rhs.id && lhs.note == rhs.note
        }
     
 }

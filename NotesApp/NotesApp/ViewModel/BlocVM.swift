@@ -64,6 +64,9 @@ public class BlocVM : ObservableObject, Identifiable, Equatable  {
     }
     
    func update(from uevm: UEVM){
+       if let index = self.model.listeUEs.firstIndex(of: uevm.model){
+                  self.model.listeUEs[index] = uevm.model
+              }
         self.objectWillChange.send()
    }
     

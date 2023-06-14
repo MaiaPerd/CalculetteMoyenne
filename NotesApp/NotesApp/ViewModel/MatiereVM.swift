@@ -36,7 +36,7 @@ public class MatiereVM : ObservableObject  {
 public class MatiereVM : ObservableObject, Identifiable, Equatable  {
  
     public static func == (lhs: MatiereVM, rhs: MatiereVM) -> Bool {
-          lhs.id == rhs.id
+          lhs.id == rhs.id &&  lhs.name == rhs.name &&  lhs.coef == rhs.coef && lhs.note == rhs.note
       }
     
     public init(){}
@@ -100,30 +100,7 @@ public class MatiereVM : ObservableObject, Identifiable, Equatable  {
     func onEdited(){
         isEditing = false
     }
-    /*
-    @Published
-    var isEditing: Bool = false
-        
-    private var copy: MatiereVM { MatiereVM(model: self.model) }
-        
-    var editedCopy: MatiereVM?
-        
-    func onEditing(){
-        editedCopy = self.copy
-        isEditing = true
-    }
-        
-    func onEdited(isCancelled cancel: Bool = false) {
-        if !cancel {
-            if let editedCopy = editedCopy {
-                self.model = editedCopy.model
-            }
-        }
-        editedCopy = nil
-        isEditing = false
-    }
-    */
-    
+   
     var ue: UEVM?
     
     private func notifyPropertyChanged(){
