@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Matiere : Identifiable, Equatable {
+public struct Matiere : Identifiable, Equatable, Codable {
     public let id: UUID
     public var name: String
     public var coef: Int

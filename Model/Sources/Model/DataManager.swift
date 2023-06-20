@@ -7,7 +7,8 @@
 
 import Foundation
 
-public protocol DataManager  {
-    func loadUEs() -> [UE]
-    func save(ues: [UE])
+@available(iOS 13.0.0, *)
+public protocol DataManager {
+    func load() async throws -> ([UE], [Bloc])
+    func save(withUEs ues: [UE], withBlocs blocs: [Bloc]) async throws
 }

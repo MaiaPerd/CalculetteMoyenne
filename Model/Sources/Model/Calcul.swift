@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Calcul {
+public struct Calcul : Codable {
     public static func moyennePonderee(lesNotes notes: [Matiere])-> Float {
         var coefTotal = 0
         var moyenne: Float = 0;

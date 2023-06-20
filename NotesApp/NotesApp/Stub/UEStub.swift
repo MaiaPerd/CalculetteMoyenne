@@ -10,6 +10,12 @@ import Model
 
 public class UEStub {
     
+    public static func loadManager()->Manager{
+        var manager = Manager();
+        manager.load(ues: loadUEs(), blocs: loadBlocs())
+        return manager
+    }
+    
     public static func loadUEs()->[UE]{
         var mesUEs: [UE] = []
         

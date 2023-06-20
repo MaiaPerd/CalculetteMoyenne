@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CalculetteView: View {
     @ObservedObject var uesVM : UEsVM
+    @Environment(\.scenePhase) private var scenePhase
+    let saveAction: ()->Void
     
     var body: some View {
         NavigationStack{
@@ -50,6 +52,8 @@ struct CalculetteView: View {
                 }.background(Colors.grey).cornerRadius(10).padding(4)
             }.navigationTitle("Calculette")
                 .accentColor(.red)
+        } .onChange(of: scenePhase) { phase in
+            if phase == .inactive { saveAction() }
         }
        
     }
@@ -57,6 +61,6 @@ struct CalculetteView: View {
 
 struct CalculetteView_Previews: PreviewProvider {
     static var previews: some View {
-        CalculetteView(uesVM: UEsVM(ues: UEStub.loadUEs(), blocs: UEStub.loadBlocs()))
+        CalculetteView(uesVM: UEsVM(withPersitance: JsonPersistance()), saveAction: {})
     }
 }
