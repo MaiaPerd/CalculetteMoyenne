@@ -42,7 +42,7 @@ struct EditView: View {
                         }
                         ForEach(ue.listeNotesVM){note in
                             HStack{
-                                NoteEditView(matiere: note)
+                                NoteView(matiere: note, isText: false)
                                 Button(action: {
                                     ue.deleteMatiere(matiere: note)
                                 }){

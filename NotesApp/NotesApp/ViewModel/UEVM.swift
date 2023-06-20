@@ -226,11 +226,11 @@ public class UEVM : ObservableObject, Identifiable, Equatable, Hashable  {
     
     @Published
     var model: UE = UE(id: UUID(), name: "Prod",  nbUe: 1, coef: 1, listeNotes: []){
-        willSet(newValue) {
-            if !self.listeNotesVM.map({$0.model}).compare(to: newValue.listeNotes){
-                self.listeNotesVM.forEach { $0.unsubscribe(with: self) }
-            }
-        }
+//        willSet(newValue) {
+//            if !self.listeNotesVM.map({$0.model}).compare(to: newValue.listeNotes){
+//                self.listeNotesVM.forEach { $0.unsubscribe(with: self) }
+//            }
+//        }
         didSet {
             if self.model.name != self.name {
                 self.name = self.model.name
@@ -242,6 +242,9 @@ public class UEVM : ObservableObject, Identifiable, Equatable, Hashable  {
                 self.coef = self.model.coef
             }
             if !self.model.listeNotes.compare(to: self.listeNotesVM.map({$0.model})){
+//                self.listeNotesVM.forEach { mvm in
+//                    mvm.unsubscribe(with: self)
+//                }
                 self.listeNotesVM = self.model.listeNotes.map({MatiereVM(model: $0)})
                 self.listeNotesVM.forEach { mvm in
                     mvm.subscribe(with: self, and: onNotifyChanged(source:))
@@ -316,7 +319,7 @@ public class UEVM : ObservableObject, Identifiable, Equatable, Hashable  {
     }
     
     public func addMatiere(){
-        var matiere = MatiereVM()
+        let matiere = MatiereVM()
         self.listeNotesVM.append(matiere)
         matiere.subscribe(with: self, and: onNotifyChanged(source:))
     }

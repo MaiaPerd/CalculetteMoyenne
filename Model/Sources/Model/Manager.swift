@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Manager {
+public struct Manager  {
     let dataManager: DataManager
     public var ues: [UE] = []
     

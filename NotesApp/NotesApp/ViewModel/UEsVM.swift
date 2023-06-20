@@ -48,18 +48,42 @@ public class UEsVM : ObservableObject  {
     
 }*/
 
-public class UEsVM : ObservableObject  {
+public class UEsVM : ObservableObject, Hashable  {
+    public static func == (lhs: UEsVM, rhs: UEsVM) -> Bool {
+        lhs.allUEs.compare(to: rhs.allUEs)
+    }
+    
     @Published var allUEs: [UEVM] = []
     public var blocs: [BlocVM]
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine("ues")
+    }
     
     public init(ues: [UE], blocs: [Bloc]){
         self.allUEs = ues.map({UEVM(model: $0)})
         self.blocs = blocs.map({BlocVM(model: $0)})
+        self.allUEs.forEach { uevm in
+            uevm.subscribe(with: self, and: onNotifyChanged(source:))
+        }
     }
     
     public init(ues: [UEVM], blocs: [BlocVM]){
         self.allUEs = ues
         self.blocs = blocs
+        self.allUEs.forEach { uevm in
+            uevm.subscribe(with: self, and: onNotifyChanged(source:))
+        }
+    }
+    
+    func onNotifyChanged(source:UEVM){
+        self.blocs.forEach{ bloc in
+            if let index = bloc.listeUEs.firstIndex(where: {$0.nbUe == source.model.nbUE}){
+                bloc.listeUEs[index].model = source.model
+            }
+        }
+       
+        self.objectWillChange.send()
     }
     
     

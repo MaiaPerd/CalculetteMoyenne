@@ -42,7 +42,7 @@ struct DetailUEView: View {
                 }.accentColor(.red)
             }.sheet(isPresented: $ue.isAdding){
                 NavigationStack{
-                    NoteEditView(matiere: ue.addedItem!)
+                    NoteView(matiere: ue.addedItem!, isText: false)
                         .toolbar{
                             ToolbarItem(id: "add", placement: .confirmationAction){
                                 Button(action: {

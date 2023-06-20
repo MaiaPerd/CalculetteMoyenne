@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol DataManager {
+public protocol DataManager  {
     func loadUEs() -> [UE]
     func save(ues: [UE])
 }

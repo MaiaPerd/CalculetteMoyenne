@@ -33,9 +33,6 @@ public class BlocVM : ObservableObject, Identifiable, Equatable, Hashable  {
             if self.model.name != self.name {
                 self.name = self.model.name
             }
-            if self.model.moyenne != self.moyenne {
-                self.moyenne = self.model.moyenne
-            }
             if !self.model.listeUEs.compare(to: self.listeUEs.map({$0.model})){
                 self.listeUEs = self.model.listeUEs.map({UEVM(model: $0)})
                 self.listeUEs.forEach { uevm in
@@ -43,6 +40,10 @@ public class BlocVM : ObservableObject, Identifiable, Equatable, Hashable  {
                 }
              }
         }
+    }
+    
+    var moyenne: Float {
+        model.moyenne
     }
     
     @Published
@@ -55,9 +56,6 @@ public class BlocVM : ObservableObject, Identifiable, Equatable, Hashable  {
     }
     
     @Published
-    var moyenne: Float = 0
-    
-    @Published
     var listeUEs: [UEVM] = [] {
         didSet {
             let listeNotes = self.listeUEs.map({$0.model})
@@ -68,6 +66,9 @@ public class BlocVM : ObservableObject, Identifiable, Equatable, Hashable  {
     }
     
     func onNotifyChanged(source:UEVM){
+        if let index = self.model.listeUEs.firstIndex(where: {$0.nbUE == source.model.nbUE}){
+            self.model.listeUEs[index] = source.model
+        }
         self.objectWillChange.send()
     }
     
