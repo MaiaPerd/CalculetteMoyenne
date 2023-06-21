@@ -10,18 +10,20 @@ import SwiftUI
 struct NoteView: View {
     @ObservedObject var matiere: MatiereVM
     
-    var isLock = true
-    
     var isText: Bool
     
-    @State var capsuleColor: Color = .clear
+   var capsuleColor: Color{
+        if matiere.note >= 10 {
+            return .red
+        } else {
+             return .green
+        }
+    }
     
-    init(matiere: MatiereVM, isLock: Bool = true, isText: Bool) {
+    init(matiere: MatiereVM, isText: Bool) {
         self.matiere = matiere
-        self.isLock = isLock
         self.isText = isText
         if isText == false {
-         //   self.matiere.onEdited()
             self.matiere.onEditing()
         }
     }
@@ -62,9 +64,7 @@ struct NoteView: View {
                 }
               
                 HStack{
-                    Capsule().frame(width: getWidth() , height: 10).foregroundColor(capsuleColor) .onAppear {
-                        setCapsuleColor()
-                    } .gesture( DragGesture(minimumDistance: 1, coordinateSpace: .local)
+                    Capsule().frame(width: getWidth() , height: 10).foregroundColor(capsuleColor) .gesture( DragGesture(minimumDistance: 1, coordinateSpace: .local)
                         .onChanged({
                             value in
                             
@@ -72,26 +72,7 @@ struct NoteView: View {
                                 if value.location.x <= 200 && value.location.x > 0 {
                                     setWidth(newWidth: value.location.x)
                                 }
-                              
-                                
-                                /*
-                                if value.translation.width < getWidth() {
-                                    // left
-                                    if value.startLocation.x - value.location.x > 0 {
-                                        setWidth(newWidth: /*value.startLocation.x -*/ value.location.x)
-                                    }
-                                   
-                                }
-
-                                if value.translation.width > getWidth() {
-                                    // right
-                                    if value.location.x - value.startLocation.x <= 200 {
-                                        setWidth(newWidth: value.location.x /*- value.startLocation.x*/)
-                                    }
-                                    
-                                }*/
                             }
-                                
                         })
                         )
                     Text(String(format: "%.2f", matiere.note))
@@ -102,13 +83,6 @@ struct NoteView: View {
        
     }
     
-    private func setCapsuleColor(){
-        if matiere.note >= 10 {
-            capsuleColor = .red
-        } else {
-            capsuleColor = .green
-        }
-    }
     
     private func getWidth() -> CGFloat{
         if matiere.note * 10 < 10 {
@@ -119,7 +93,7 @@ struct NoteView: View {
     
     private func setWidth(newWidth: CGFloat) {
         matiere.note = newWidth.cgFloatToFloat() / 10
-        setCapsuleColor()
+
     }
     
     private func getLock(){
