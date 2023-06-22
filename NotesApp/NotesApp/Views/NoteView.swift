@@ -12,7 +12,7 @@ struct NoteView: View {
     
     var isText: Bool
     
-   var capsuleColor: Color{
+   var capsuleColor: Color {
         if matiere.note >= 10 {
             return .red
         } else {

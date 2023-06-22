@@ -23,7 +23,7 @@ struct UECalculetteView: View {
                     
                 }
                 HStack{
-                    Capsule().frame(width: (ue.moyenne.floatToCgFloat()*10), height: 10).foregroundColor(getCapsuleColor())
+                    Capsule().frame(width: (ue.moyenne.floatToCgFloat()*10), height: 10).foregroundColor(getCapsuleColor)
                     Text(String(format: "%.2f", ue.moyenne.floatToCgFloat()))
                 }
                 
@@ -39,11 +39,12 @@ struct UECalculetteView: View {
         
     }
     
-    private func getCapsuleColor() -> Color{
-        if ue.moyenne > 10 {
+    private var getCapsuleColor: Color {
+        if ue.moyenne >= 10 {
             return .red
+        } else {
+             return .green
         }
-        return .green
     }
 }
 
