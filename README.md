@@ -15,10 +15,6 @@ L'application est disponible sous iOS.
 
 Le projet est en **swiftui**, je vous conseille de le lancé sur **xcode**.
 
-# Installation
-
-Cloné le dépôt du projet: ```git clone https://codefirst.iut.uca.fr/git/maia.perderizet/CalculetteMoyenne.git```.
-
 ## Lancement:
 
 - Ouvrir la solution dans xcode.
@@ -27,6 +23,4 @@ Cloné le dépôt du projet: ```git clone https://codefirst.iut.uca.fr/git/maia.
 
 # Auteurs
 Maïa PERDERIZET
-
-_Generated with a_ **Code#0** _template_  
-<img src="Documentation/doc_images/CodeFirst.png" height=40/>   
+ 
