@@ -7,8 +7,7 @@ L'application est disponible sous iOS.
 # Sommaire
 
 - [Requirements](#requirements)
-- [Installation](#installation)
-    - [Lancement:](#lancement)
+- [Lancement:](#lancement)
 - [Auteurs](#auteurs)
 
 # Requirements
