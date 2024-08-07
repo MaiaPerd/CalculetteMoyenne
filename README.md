@@ -1,6 +1,6 @@
 # CalculetteMoyenne
 
-Bienvenue sur l'émulation de une application de simulation et de calcul de moyenne.
+Bienvenue sur l'émulation d'une application de simulation et de calcul de moyenne.
 
 L'application est disponible sous iOS.
 
@@ -12,7 +12,7 @@ L'application est disponible sous iOS.
 
 # Requirements
 
-Le projet est en **swiftui**, je vous conseille de le lancé sur **xcode**.
+Le projet est en **swiftui**, je vous conseille de le lancer sur **xcode**.
 
 ## Lancement:
 
